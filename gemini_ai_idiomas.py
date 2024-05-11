@@ -51,7 +51,7 @@ def main():
         if st.button("Enviar"):
             if prompt.strip() != "":
                 response = chat.send_message(prompt)
-                st.text_area("Chatbot:", print(response.text), height=100)
+                st.text_area("Chatbot:",response.text, height=100)
     prompt = st.text_input("Você:", "")
 
 
