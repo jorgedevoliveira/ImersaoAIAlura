@@ -52,10 +52,6 @@ def main():
             while prompt != "sair":
                         response = chat.send_message(prompt)
                         st.text_area("Chatbot:",response.text, height=100)
-            prompt = st.text_input("Você:", "")
-            if st.button("Enviar"):
-                if prompt.strip() != "":    
-
 
 if __name__ == "__main__":
     main()
