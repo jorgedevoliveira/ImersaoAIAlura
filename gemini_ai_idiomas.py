@@ -40,29 +40,21 @@ model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
                               safety_settings=safety_settings)
 
 # Função para interação com o chatbot
-chat = model.start_chat(history=[])  # Inicializa o chat fora da função
+chat = model.start_chat(history=[])  # Inicializa o chat dentro da função
 
 def main():
     st.title("Chatbot com GEMINI AI")
     st.markdown("Este é um chatbot alimentado por GEMINI AI, onde você pode praticar idiomas.")
 
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+    prompt = st.text_input("Você:", "")
+    if st.button("Enviar"):
+        if prompt.strip() != "":
+            while prompt != "sair":
+                response = chat.send_message(prompt)
+                st.text_area("Chatbot:",response.text, height=100)
+                prompt = st.text_input("Você:", "") # Solicita novo input do usuário
+                if st.button("Enviar"): # Aguarda o usuário clicar em "Enviar" novamente
+                    pass # Não faz nada, apenas espera o próximo input
 
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    if prompt := st.chat_input("Você:"):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-        
-        response = chat.send_message(prompt)
-        st.session_state.messages.append({"role": "assistant", "content": response.text})
-
-        with st.chat_message("assistant"):
-            st.markdown(response.text)
-        
 if __name__ == "__main__":
     main()
