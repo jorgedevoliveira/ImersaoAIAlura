@@ -55,4 +55,19 @@ def main():
 
     prompt = st.text_input("Você:", "")
     if st.button("Enviar"):
-        if prompt.str
+        if prompt.strip() != "":
+            resposta_chatbot = chatbot(prompt, st.session_state["history"])
+            st.text_area("Chatbot:", value=resposta_chatbot, height=100)
+            # Limpa o campo de entrada após enviar a mensagem
+            st.session_state["last_prompt"] = prompt
+            st.text_input("Você:", value="", key="last_prompt")
+
+    # Exibe o histórico do chat na tela
+    st.subheader("Histórico do Chat")
+    for message in st.session_state["history"]:
+        st.text(f"Você: {message['user']}")
+        st.text(f"Chatbot: {message['bot']}")
+        st.text("-----")
+
+if __name__ == "__main__":
+    main()
