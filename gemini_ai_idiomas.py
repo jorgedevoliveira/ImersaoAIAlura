@@ -47,11 +47,11 @@ def main():
     st.title("Chatbot com GEMINI AI")
     st.markdown("Este é um chatbot alimentado por GEMINI AI, onde você pode praticar idiomas.")
 
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
-
-
-    st.session_state.chat = chat = model.start_chat(history=[]) 
-    
+    if "chat" not in st.session_state:
+        st.session_state.chat = gemini.start_chat()  
 
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
@@ -61,12 +61,12 @@ def main():
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
-        
-        response = chat.send_message(prompt)
+
+        response = st.session_state.chat.send_message(prompt)
         st.session_state.messages.append({"role": "assistant", "content": response.text})
 
         with st.chat_message("assistant"):
             st.markdown(response.text)
-        
+
 if __name__ == "__main__":
     main()
