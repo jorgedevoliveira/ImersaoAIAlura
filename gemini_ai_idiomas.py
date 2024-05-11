@@ -1,10 +1,7 @@
-
+import streamlit as st
 import google.generativeai as genai
 
-
-
 # Configurando a API Key do GEMINI AI
-
 GOOGLE_API_KEY = "AIzaSyCk282dAS15LSTOU7GOjsmWOkoFhmMoUlI"
 genai.configure(api_key=GOOGLE_API_KEY)
 
@@ -42,11 +39,20 @@ model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
                               system_instruction=system_instruction,
                               safety_settings=safety_settings)
 
-chat = model.start_chat(history=[])
-chat
+# Função para interação com o chatbot
+def chatbot(prompt):
+    response = chat.send_message(prompt)
+    return response.text
 
-prompt = input("Prompt: ")
-while prompt != "sair":
-  response = chat.send_message(prompt)
-  print(response.text)
-  prompt = input("Prompt: ")
+def main():
+    st.title("Chatbot com GEMINI AI")
+    st.markdown("Este é um chatbot alimentado por GEMINI AI, onde você pode praticar idiomas.")
+
+    prompt = st.text_input("Você:", "")
+    if st.button("Enviar"):
+        if prompt.strip() != "":
+            resposta_chatbot = chatbot(prompt)
+            st.text_area("Chatbot:", value=resposta_chatbot, height=100)
+
+if __name__ == "__main__":
+    main()
