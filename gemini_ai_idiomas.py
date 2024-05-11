@@ -40,8 +40,8 @@ model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
                               safety_settings=safety_settings)
 
 # Função para interação com o chatbot
-    chat = model.start_chat(history=[])  # Inicializa o chat dentro da função
-    chat
+chat = model.start_chat(history=[])  # Inicializa o chat dentro da função
+chat
 
 def main():
     st.title("Chatbot com GEMINI AI")
