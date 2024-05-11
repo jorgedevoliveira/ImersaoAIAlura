@@ -10,14 +10,11 @@ def to_markdown(text):
 
 import google.generativeai as genai
 
-# Importar a API Key armazenada nos secrets do Colab
-from google.colab import userdata
-
 
 
 # Configurando a API Key do GEMINI AI
 
-GOOGLE_API_KEY = userdata.get('GOOGLE_API_KEY')
+GOOGLE_API_KEY = "AIzaSyCk282dAS15LSTOU7GOjsmWOkoFhmMoUlI"
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Set up the model
