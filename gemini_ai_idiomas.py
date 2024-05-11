@@ -32,4 +32,28 @@ safety_settings = [
     },
 ]
 
-system_instruction = "Responda como um professor de idiomas, \nna primeira resposta, solicite o idioma que
+system_instruction = "Responda como um professor de idiomas, \nna primeira resposta, solicite o idioma que a pessoa quer praticar e que para encerrar do chat basta digitar sair,\nresponda no idioma pt-br e no idioma solicitado no promp\n\n"
+
+model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
+                              generation_config=generation_config,
+                              system_instruction=system_instruction,
+                              safety_settings=safety_settings)
+
+# Função para interação com o chatbot
+def chatbot(prompt):
+    chat = model.start_chat(history=[])  # Inicializa o chat dentro da função
+    response = chat.send_message(prompt)
+    return response.text
+
+def main():
+    st.title("Chatbot com GEMINI AI")
+    st.markdown("Este é um chatbot alimentado por GEMINI AI, onde você pode praticar idiomas.")
+
+    prompt = st.text_input("Você:", "")
+    if st.button("Enviar"):
+        if prompt.strip() != "":
+            resposta_chatbot = chatbot(prompt)
+            st.text_area("Chatbot:", value=resposta_chatbot, height=100)
+
+if __name__ == "__main__":
+    main()
