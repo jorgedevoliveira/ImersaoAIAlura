@@ -46,7 +46,6 @@ chat = model.start_chat(history=[])
 chat
 
 prompt = input("Prompt: ")
-
 while prompt != "sair":
   response = chat.send_message(prompt)
   print(response.text)
