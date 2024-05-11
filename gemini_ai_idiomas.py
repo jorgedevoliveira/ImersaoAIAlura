@@ -49,5 +49,5 @@ prompt = input("Prompt: ")
 
 while prompt != "sair":
   response = chat.send_message(prompt)
-  print(response.text))
+  print(response.text)
   prompt = input("Prompt: ")
