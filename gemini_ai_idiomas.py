@@ -41,10 +41,10 @@ model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
 
 # Função para interação com o chatbot
 def chatbot(prompt, history):
-    chat = model.start_chat(history=history)
+    chat = model.start_chat(history=[{"user": "", "bot": ""}] + history)  # Inicializa o histórico
     response = chat.send_message(prompt)
     history.append({"user": prompt, "bot": response.text})  # Adiciona a mensagem ao histórico
-    return response.text, history
+    return response.text
 
 def main():
     st.title("Chatbot com GEMINI AI")
@@ -55,17 +55,4 @@ def main():
 
     prompt = st.text_input("Você:", "")
     if st.button("Enviar"):
-        if prompt.strip() != "":
-            resposta_chatbot, st.session_state["history"] = chatbot(prompt, st.session_state["history"])
-            st.text_area("Chatbot:", value=resposta_chatbot, height=100)
-            st.session_state.sync()  # Sincroniza o estado da sessão após modificar o histórico
-
-    # Exibe o histórico do chat na tela
-    st.subheader("Histórico do Chat")
-    for message in st.session_state["history"]:
-        st.text(f"Você: {message['user']}")
-        st.text(f"Chatbot: {message['bot']}")
-        st.text("-----")
-
-if __name__ == "__main__":
-    main()
+        if prompt.str
