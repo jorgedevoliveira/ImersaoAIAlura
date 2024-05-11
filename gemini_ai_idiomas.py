@@ -2,7 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 
 # Configurando a API Key do GEMINI AI
-GOOGLE_API_KEY = ""
+GOOGLE_API_KEY = "AIzaSyCk282dAS15LSTOU7GOjsmWOkoFhmMoUlI"
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Set up the model
