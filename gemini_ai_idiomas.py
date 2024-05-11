@@ -46,13 +46,13 @@ def main():
     st.title("Chatbot com GEMINI AI")
     st.markdown("Este é um chatbot alimentado por GEMINI AI, onde você pode praticar idiomas.")
 
-    prompt = st.text_input("")
+    prompt = st.text_input("Você:", "")
     while prompt != "sair":
         if st.button("Enviar"):
             if prompt.strip() != "":
                 response = chat.send_message(prompt)
                 st.text_area("Chatbot:", print(response.text), height=100)
-    prompt = st.text_input("")
+    prompt = st.text_input("Você:", "")
 
 
 if __name__ == "__main__":
