@@ -1,12 +1,3 @@
-from IPython.display import display
-from IPython.display import Markdown
-import textwrap
-
-
-def to_markdown(text):
-  text = text.replace('•', '  *')
-  return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
-
 
 import google.generativeai as genai
 
@@ -58,5 +49,5 @@ prompt = input("Prompt: ")
 
 while prompt != "sair":
   response = chat.send_message(prompt)
-  display(to_markdown(response.text))
+  print(response.text))
   prompt = input("Prompt: ")
