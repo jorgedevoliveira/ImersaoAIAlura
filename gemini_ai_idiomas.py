@@ -44,7 +44,7 @@ def chatbot(prompt, history):
     chat = model.start_chat(history=history)
     response = chat.send_message(prompt)
     history.append({"user": prompt, "bot": response.text})  # Adiciona a mensagem ao histórico
-    return response.text
+    return response.text, history
 
 def main():
     st.title("Chatbot com GEMINI AI")
@@ -56,11 +56,9 @@ def main():
     prompt = st.text_input("Você:", "")
     if st.button("Enviar"):
         if prompt.strip() != "":
-            resposta_chatbot = chatbot(prompt, st.session_state["history"])
+            resposta_chatbot, st.session_state["history"] = chatbot(prompt, st.session_state["history"])
             st.text_area("Chatbot:", value=resposta_chatbot, height=100)
-            # Limpa o campo de entrada após enviar a mensagem
-            st.session_state["last_prompt"] = prompt
-            st.text_input("Você:", value="", key="last_prompt")
+            st.session_state.sync()  # Sincroniza o estado da sessão após modificar o histórico
 
     # Exibe o histórico do chat na tela
     st.subheader("Histórico do Chat")
