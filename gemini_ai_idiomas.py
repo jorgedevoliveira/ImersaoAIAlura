@@ -52,9 +52,11 @@ def main():
 
     st.session_state.chat = chat = model.start_chat(history=[]) 
     
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+
+
+    for i, message in enumerate(st.session_state.chat.history):
+        if i == 1:
+            continue
 
     if prompt := st.chat_input(""):
         st.session_state.messages.append({"role": "user", "content": prompt})
