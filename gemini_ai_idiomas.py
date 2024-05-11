@@ -56,10 +56,5 @@ def main():
     prompt = st.text_input("")
 
 
-
-  response = chat.send_message(prompt)
-  print(response.text)
-  prompt = input("Prompt: ")
-
 if __name__ == "__main__":
     main()
