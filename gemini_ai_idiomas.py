@@ -53,7 +53,7 @@ def main():
             if prompt.strip() != "":
                 response = chat.send_message(prompt)
                 st.text_area("Chatbot:", print(response.text), height=100)
-     prompt = st.text_input("")
+    prompt = st.text_input("")
 
 
 
