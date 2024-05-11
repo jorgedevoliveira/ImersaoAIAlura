@@ -32,4 +32,43 @@ safety_settings = [
     },
 ]
 
-system_instruction = "Responda como um professor de idiomas, \nna primeira resposta, solicite o idioma que a pessoa quer praticar e que para encerrar do chat basta digitar sair,\nresponda no idioma p
+system_instruction = "Responda como um professor de idiomas, \nna primeira resposta, solicite o idioma que a pessoa quer praticar e que para encerrar do chat basta digitar sair,\nresponda no idioma pt-br e no idioma solicitado no promp\n\n"
+
+model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
+                              generation_config=generation_config,
+                              system_instruction=system_instruction,
+                              safety_settings=safety_settings)
+
+# Função para interação com o chatbot
+def chatbot(prompt, chat_state=None):
+    if chat_state is None:
+        chat_state = {"history": []}
+
+    chat = model.continue_chat(chat_state["history"])  # Continua a conversa a partir do estado anterior
+    response = chat.send_message(prompt)
+    
+    chat_state["history"].append({"role": "system", "content": prompt})
+    chat_state["history"].append({"role": "user", "content": response.text})
+
+    return response.text, chat_state
+
+def main():
+    st.title("Chatbot com GEMINI AI")
+    st.markdown("Este é um chatbot alimentado por GEMINI AI, onde você pode praticar idiomas.")
+
+    chat_state = st.session_state.get("chat_state", None)  # Recupera o estado da conversa da sessão
+    
+    if chat_state is None or "history" not in chat_state:
+        chat_state = {"history": []}
+
+    prompt = st.text_input("Você:", "")
+    if st.button("Enviar"):
+        if prompt.strip() != "":
+            resposta_chatbot, chat_state = chatbot(prompt, chat_state)
+            st.text_area("Chatbot:", value=resposta_chatbot, height=100)
+    
+    # Atualiza o estado da conversa na sessão
+    st.session_state["chat_state"] = chat_state
+
+if __name__ == "__main__":
+    main()
