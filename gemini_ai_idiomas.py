@@ -40,7 +40,7 @@ model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
                               safety_settings=safety_settings)
 
 # Função para interação com o chatbot
-chat = model.start_chat(history=[])  # Inicializa o chat fora da função
+ # Inicializa o chat fora da função
 
 def main():
     st.title("Chatbot com GEMINI AI")
@@ -49,6 +49,9 @@ def main():
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
+
+    st.session_state.chat = chat = model.start_chat(history=[]) 
+    
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
